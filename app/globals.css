@@ -44,6 +44,9 @@ p { line-height: 1.72; }
 .nav-links a { font-size: 14px; font-weight: 600; color: #554b3f; position: relative; }
 .nav-links a:after { content: ""; position: absolute; left: 0; right: 100%; bottom: -7px; height: 1px; background: var(--wine); transition: right .25s ease; }
 .nav-links a:hover:after { right: 0; }
+.language-select { height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 10px 0 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.55); color: #554b3f; flex-shrink: 0; }
+.language-select > span:not(.sr-only) { color: var(--gold); font-size: 14px; }
+.language-select select { max-width: 105px; border: 0; outline: 0; background: transparent; color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
 .button { min-height: 54px; display: inline-flex; align-items: center; justify-content: center; gap: 18px; border-radius: 999px; padding: 0 26px; background: var(--wine); color: #fff; font-weight: 600; font-size: 15px; box-shadow: 0 12px 25px rgba(130,59,24,.2); transition: transform .25s ease, background .25s ease; }
 .button:hover { transform: translateY(-2px); background: var(--wine-dark); }
 .button span { font-size: 18px; }
@@ -218,7 +221,7 @@ footer { background: var(--warm); padding: 75px 0 28px; }
 .footer-bottom { border-top: 1px solid var(--line); margin-top: 60px; padding-top: 22px; display: flex; justify-content: space-between; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .1em; }
 
 @media (max-width: 1020px) {
-  .nav-links { gap: 18px; }.nav-links a { font-size: 12px; }
+  .nav { gap: 14px; }.nav-links { gap: 14px; }.nav-links a { font-size: 11px; }.language-select select { max-width: 70px; }
   .hero-grid { grid-template-columns: 1fr 1fr; }.hero-visual { transform: scale(.9); transform-origin: center; }
   .split-intro { gap: 50px; }.value-cards h3 { font-size: 24px; }
   .feature-row { gap: 70px; padding-inline: 0; }.feature-shape { width: 400px; height: 400px; }
@@ -229,6 +232,7 @@ footer { background: var(--warm); padding: 75px 0 28px; }
 @media (max-width: 780px) {
   .container { width: min(100% - 32px, 620px); }.section-pad { padding: 88px 0; }
   .nav-wrap { position: absolute; }.nav { height: 74px; }.nav-cta { display: none; }
+  .language-select { height: 38px; padding-inline: 9px; }.language-select select { max-width: 76px; }
   .menu-toggle { display: block; margin-left: auto; z-index: 3; }
   .nav-links { position: absolute; top: 66px; left: 16px; right: 16px; display: grid; gap: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 9px 20px; box-shadow: var(--shadow); opacity: 0; transform: translateY(-10px); pointer-events: none; transition: .25s ease; }
   .nav-links.open { opacity: 1; transform: none; pointer-events: auto; }
