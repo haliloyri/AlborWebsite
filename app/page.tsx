@@ -182,7 +182,7 @@ export default function Home() {
       </section>
 
       <footer>
-        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#faq">{copy.nav.faq}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
+        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#faq">{copy.nav.faq}</a><a href="/privacy">{copy.legal.privacy}</a><a href="/support">{copy.legal.support}</a><a href="/terms">{copy.legal.terms}</a><a href="/data-deletion">{copy.legal.deletion}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} Albor</span><span>{copy.footer.spark}</span></div>
       </footer>
     </main>
