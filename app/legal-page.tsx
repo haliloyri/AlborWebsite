@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { legalCopy, type LegalPageKind } from "./legal-copy";
+import { homePath, localizedPath } from "./locale-paths";
 import { localeLabels, locales, type Locale } from "./translations";
 
-const routeFor: Record<LegalPageKind, string> = {
+const routes: Record<LegalPageKind, string> = {
   privacy: "/privacy",
   support: "/support",
   terms: "/terms",
@@ -20,35 +21,37 @@ function LegalLogo() {
   );
 }
 
-export function LegalPage({ kind }: { kind: LegalPageKind }) {
-  const [locale, setLocale] = useState<Locale>("en");
+function routeFor(kind: LegalPageKind, locale: Locale) {
+  return localizedPath(routes[kind], locale);
+}
+
+export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind; initialLocale?: Locale }) {
+  const [locale] = useState<Locale>(initialLocale);
   const copy = legalCopy[locale];
   const document = copy.documents[kind];
 
   useEffect(() => {
-    const saved = window.localStorage.getItem("albor-locale") as Locale | null;
-    if (saved && locales.includes(saved)) setLocale(saved);
-  }, []);
-
-  useEffect(() => {
     documentElementLanguage(locale);
-    window.localStorage.setItem("albor-locale", locale);
   }, [locale]);
+
+  const changeLocale = (next: Locale) => {
+    if (next !== locale) window.location.assign(routeFor(kind, next));
+  };
 
   return (
     <main className="legal-page">
       <header className="legal-header">
         <div className="container legal-nav">
-          <a href="/" aria-label={copy.back}><LegalLogo /></a>
+          <a href={homePath(locale)} aria-label={copy.back}><LegalLogo /></a>
           <nav aria-label="Legal pages">
-            {(Object.keys(routeFor) as LegalPageKind[]).map((item) => (
-              <a className={item === kind ? "active" : ""} href={routeFor[item]} key={item}>{copy.nav[item]}</a>
+            {(Object.keys(routes) as LegalPageKind[]).map((item) => (
+              <a className={item === kind ? "active" : ""} href={routeFor(item, locale)} key={item}>{copy.nav[item]}</a>
             ))}
           </nav>
           <label className="language-select legal-language">
             <span className="sr-only">{copy.language}</span>
             <span aria-hidden="true">◎</span>
-            <select value={locale} onChange={(event) => setLocale(event.target.value as Locale)} aria-label={copy.language}>
+            <select value={locale} onChange={(event) => changeLocale(event.target.value as Locale)} aria-label={copy.language}>
               {locales.map((item) => <option value={item} key={item}>{localeLabels[item]} · {item.toUpperCase()}</option>)}
             </select>
           </label>
@@ -57,7 +60,7 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
 
       <section className="legal-hero">
         <div className="container legal-hero-inner">
-          <a href="/" className="legal-back">← {copy.back}</a>
+          <a href={homePath(locale)} className="legal-back">← {copy.back}</a>
           <span className="eyebrow"><span>✦</span>{document.eyebrow}</span>
           <h1>{document.title}</h1>
           <p>{document.intro}</p>
@@ -98,9 +101,9 @@ export function LegalPage({ kind }: { kind: LegalPageKind }) {
 
       <footer className="legal-footer">
         <div className="container legal-footer-inner">
-          <a href="/"><LegalLogo /></a>
+          <a href={homePath(locale)}><LegalLogo /></a>
           <nav aria-label="Legal pages">
-            {(Object.keys(routeFor) as LegalPageKind[]).map((item) => <a href={routeFor[item]} key={item}>{copy.nav[item]}</a>)}
+            {(Object.keys(routes) as LegalPageKind[]).map((item) => <a href={routeFor(item, locale)} key={item}>{copy.nav[item]}</a>)}
           </nav>
           <span>© {new Date().getFullYear()} Albor · {copy.operator}, {copy.country}</span>
         </div>
@@ -123,4 +126,3 @@ function linkEmail(text: string) {
     </span>
   ));
 }
-
