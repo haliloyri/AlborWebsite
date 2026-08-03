@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { homePath, localizedPath } from "./locale-paths";
+import { homePath } from "./locale-paths";
 import { siteConfig } from "./site-config";
 import { localeLabels, locales, translations, type Locale } from "./translations";
 
@@ -12,7 +12,7 @@ const featureImages = ["home", "story-detail", "library", "progress", "profile"]
 function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className={`brand ${light ? "brand-light" : ""}`} aria-label="Albor">
-      <span className="brand-mark" aria-hidden="true"><i>✦</i></span>
+      <img className="brand-mark" src="/albor-logo.png" alt="" width="512" height="512" aria-hidden="true" />
       <span className="brand-name">Albor</span>
     </span>
   );
@@ -27,10 +27,10 @@ function StoreBadges({ locale, inverse = false }: { locale: Locale; inverse?: bo
   return (
     <div className={`store-badges ${inverse ? "inverse" : ""}`} aria-label={copy.aria}>
       {stores.map((store) => (
-        <span className="store-badge" key={store.label} title={copy.coming}>
+        <button className="store-badge" key={store.label} title={copy.coming} disabled aria-disabled="true">
           <span className="store-symbol" aria-hidden="true">{store.symbol}</span>
           <span><small>{store.overline}</small><strong>{store.label}</strong></span>
-        </span>
+        </button>
       ))}
     </div>
   );
@@ -74,6 +74,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
             <a href="#features" onClick={() => setMenuOpen(false)}>{copy.nav.features}</a>
             <a href="#categories" onClick={() => setMenuOpen(false)}>{copy.nav.categories}</a>
             <a href="#faq" onClick={() => setMenuOpen(false)}>{copy.nav.faq}</a>
+            <a href="https://alborapp.com/support" onClick={() => setMenuOpen(false)}>{copy.legal.support}</a>
           </div>
           <label className="language-select">
             <span className="sr-only">{copy.nav.language}</span>
@@ -179,7 +180,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
       </section>
 
       <footer>
-        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#faq">{copy.nav.faq}</a><a href={localizedPath("/privacy", locale)}>{copy.legal.privacy}</a><a href={localizedPath("/support", locale)}>{copy.legal.support}</a><a href={localizedPath("/terms", locale)}>{copy.legal.terms}</a><a href={localizedPath("/data-deletion", locale)}>{copy.legal.deletion}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
+        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#faq">{copy.nav.faq}</a><a href="https://alborapp.com/privacy">{copy.legal.privacy}</a><a href="https://alborapp.com/terms">{copy.legal.terms}</a><a href="https://alborapp.com/refund">İade ve İptal</a><a href="https://alborapp.com/support">{copy.legal.support}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} Albor</span><span>{copy.footer.spark}</span></div>
       </footer>
     </main>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, DM_Sans } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const display = Cormorant_Garamond({
@@ -15,20 +14,23 @@ const sans = DM_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
-  const origin = `${protocol}://${host}`;
-  const title = "Albor — A New Spark Every Day";
-  const description = "Discover the world’s big ideas through short, memorable stories—just a few minutes a day.";
+export function generateMetadata(): Metadata {
+  const title = "Albor — One idea a day, a clearer perspective.";
+  const description = "Albor turns ideas from powerful books and real stories into short, thoughtful experiences in just a few minutes.";
 
   return {
     title,
     description,
-    icons: { icon: "/favicon.svg" },
-    openGraph: { title, description, type: "website", locale: "en_US", images: [{ url: `${origin}/og-en.png`, width: 1536, height: 914, alt: "Albor — 3 minutes a day" }] },
-    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og-en.png`] },
+    metadataBase: new URL("https://alborapp.com"),
+    alternates: {
+      languages: { tr: "/tr", en: "/en", de: "/de", es: "/es" },
+    },
+    icons: {
+      icon: [{ url: "/favicon.png", type: "image/png", sizes: "64x64" }],
+      apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+    },
+    openGraph: { title, description, type: "website", locale: "en_US", images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Albor — One idea a day. A clearer perspective." }] },
+    twitter: { card: "summary_large_image", title, description, images: ["/og.png"] },
   };
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
 import { legalCopy, type LegalPageKind } from "./legal-copy";
 import { homePath, localizedPath } from "./locale-paths";
 import { localeLabels, locales, type Locale } from "./translations";
@@ -15,7 +16,7 @@ const routes: Record<LegalPageKind, string> = {
 function LegalLogo() {
   return (
     <span className="brand" aria-label="Albor">
-      <span className="brand-mark" aria-hidden="true"><i>✦</i></span>
+      <img className="brand-mark" src="/albor-logo.png" alt="" width="512" height="512" aria-hidden="true" />
       <span className="brand-name">Albor</span>
     </span>
   );
@@ -88,6 +89,7 @@ export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind;
                 {section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}>{linkEmail(bullet)}</li>)}</ul>}
               </section>
             ))}
+            {kind === "support" && <SupportForm />}
           </article>
         </div>
       </section>
@@ -103,12 +105,54 @@ export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind;
         <div className="container legal-footer-inner">
           <a href={homePath(locale)}><LegalLogo /></a>
           <nav aria-label="Legal pages">
-            {(Object.keys(routes) as LegalPageKind[]).map((item) => <a href={routeFor(item, locale)} key={item}>{copy.nav[item]}</a>)}
+            <a href="https://alborapp.com/privacy">{copy.nav.privacy}</a>
+            <a href="https://alborapp.com/terms">{copy.nav.terms}</a>
+            <a href="https://alborapp.com/refund">{locale === "tr" ? "İade ve İptal" : "Refunds & cancellations"}</a>
+            <a href="https://alborapp.com/support">{copy.nav.support}</a>
           </nav>
           <span>© {new Date().getFullYear()} Albor · {copy.operator}, {copy.country}</span>
         </div>
       </footer>
     </main>
+  );
+}
+
+function SupportForm() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const submit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const subject = String(data.get("subject") || "Albor destek talebi");
+    const body = [
+      `Ad: ${data.get("name") || ""}`,
+      `E-posta: ${data.get("email") || ""}`,
+      `Uygulama sürümü: ${data.get("version") || ""}`,
+      `Cihaz / işletim sistemi: ${data.get("device") || ""}`,
+      "",
+      String(data.get("message") || ""),
+    ].join("\n");
+    window.location.href = `mailto:info@alborapp.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSubmitted(true);
+  };
+
+  return (
+    <section className="support-form" aria-labelledby="support-form-title">
+      <h2 id="support-form-title">Destek talebi gönderin</h2>
+      <p>Gizlilik Politikası’na uygun olarak yalnızca gerekli bilgileri paylaşın; hassas kişisel bilgi, ödeme bilgisi veya parola göndermeyin.</p>
+      <form onSubmit={submit}>
+        <label>Ad<input name="name" autoComplete="name" required /></label>
+        <label>E-posta<input name="email" type="email" autoComplete="email" required /></label>
+        <label>Konu<input name="subject" required /></label>
+        <label className="support-form-wide">Mesaj<textarea name="message" rows={5} required /></label>
+        <label>Uygulama sürümü<input name="version" placeholder="Örn. 1.0.0" /></label>
+        <label>Cihaz / işletim sistemi<input name="device" placeholder="Örn. iPhone / iOS 18" /></label>
+        <label className="support-form-wide">Ekran görüntüsü <input name="screenshot" type="file" accept="image/*" /></label>
+        <p className="support-form-wide">Bu form e-posta uygulamanızı açar. Ekran görüntüsü eklemek isterseniz, açılan e-postaya dosyayı ekleyin.</p>
+        <button className="button support-form-wide" type="submit">E-posta ile devam et <span>↗</span></button>
+        {submitted && <p className="support-form-wide" role="status">E-posta uygulamanız açılmadıysa doğrudan info@alborapp.com adresine yazabilirsiniz.</p>}
+      </form>
+    </section>
   );
 }
 
