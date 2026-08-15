@@ -85,7 +85,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
               {locales.map((item) => <option value={item} key={item}>{localeLabels[item]} · {item.toUpperCase()}</option>)}
             </select>
           </label>
-          <a className="button button-small nav-cta" href="#download">{copy.nav.download} <span>↗</span></a>
+          <a className="button button-small nav-cta" href="#download">{copy.nav.download} <span className="download-icon" aria-hidden="true"><span /></span></a>
         </nav>
       </header>
 
@@ -97,7 +97,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
             <h1>{copy.hero.titleStart}<br /><em>{copy.hero.titleEm}</em> {copy.hero.titleEnd}</h1>
             <p>{copy.hero.body}</p>
             <div className="hero-actions">
-              <a className="button" href="#download">{copy.hero.primary} <span>↗</span></a>
+              <a className="button" href="#download">{copy.hero.primary} <span className="download-icon" aria-hidden="true"><span /></span></a>
               <a className="text-link" href="#how-it-works"><span className="play">▶</span> {copy.hero.secondary}</a>
             </div>
             <StoreBadges locale={locale} />
@@ -187,7 +187,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
 
       <section className="faq section-pad" id="faq">
         <div className="container faq-grid">
-          <div className="faq-intro"><span className="section-number">04</span><p className="kicker">{copy.faq.kicker}</p><h2>{copy.faq.titleStart}<br /><em>{copy.faq.titleEm}</em></h2><p>{copy.faq.body}</p><a href="#download" className="text-link">{copy.faq.ready} <span>↗</span></a></div>
+          <div className="faq-intro"><span className="section-number">04</span><p className="kicker">{copy.faq.kicker}</p><h2>{copy.faq.titleStart}<br /><em>{copy.faq.titleEm}</em></h2><p>{copy.faq.body}</p><a href="#download" className="text-link">{copy.faq.ready} <span className="download-icon" aria-hidden="true"><span /></span></a></div>
           <div className="accordion">
             {copy.faq.items.map(([question, answer], index) => <div className={`faq-item ${openFaq === index ? "open" : ""}`} key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span><i>{String(index + 1).padStart(2, "0")}</i>{question}</span><b aria-hidden="true">+</b></button><div className="faq-answer"><p>{answer}</p></div></div>)}
           </div>

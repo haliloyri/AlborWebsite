@@ -146,7 +146,7 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
         <input name="website" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" />
       </label>
       <button className="button button-light" type="submit" disabled={status === "submitting" || !consent || Boolean(turnstileSiteKey && !turnstileToken)}>
-        {status === "submitting" ? copy.submitting : copy.submit} <span className="download-icon" aria-hidden="true"><span /></span>
+        {status === "submitting" ? copy.submitting : copy.submit} <span className="download-arrow" aria-hidden="true">→</span>
       </button>
       <label className="waitlist-consent">
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required />
