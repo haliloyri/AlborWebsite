@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { homePath } from "./locale-paths";
 import { siteConfig } from "./site-config";
 import { localeLabels, locales, translations, type Locale } from "./translations";
+import { WaitlistForm } from "./waitlist-form";
 
 const categoryIcons = ["◌", "Φ", "◒", "⚑", "⌂", "✧", "♡", "◍", "✓", "↗"];
 const categoryTones = ["lilac", "violet", "gold", "blue", "sand", "sky", "teal", "orange", "green", "sage"];
@@ -12,7 +13,7 @@ const featureImages = ["home", "story-detail", "library", "progress", "profile"]
 function Logo({ light = false }: { light?: boolean }) {
   return (
     <span className={`brand ${light ? "brand-light" : ""}`} aria-label="Albor">
-      <img className="brand-mark" src="/albor-logo.png" alt="" width="512" height="512" aria-hidden="true" />
+      <img className="brand-mark" src="/albor-brand-mark-v2.png" alt="" width="512" height="512" aria-hidden="true" />
       <span className="brand-name">Albor</span>
     </span>
   );
@@ -73,6 +74,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
             <a href="#how-it-works" onClick={() => setMenuOpen(false)}>{copy.nav.how}</a>
             <a href="#features" onClick={() => setMenuOpen(false)}>{copy.nav.features}</a>
             <a href="#categories" onClick={() => setMenuOpen(false)}>{copy.nav.categories}</a>
+            <a href="#community" onClick={() => setMenuOpen(false)}>{copy.nav.community}</a>
             <a href="#faq" onClick={() => setMenuOpen(false)}>{copy.nav.faq}</a>
             <a href="https://alborapp.com/support" onClick={() => setMenuOpen(false)}>{copy.legal.support}</a>
           </div>
@@ -165,6 +167,24 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
         </div>
       </section>
 
+      <section className="community section-pad" id="community">
+        <div className="container community-card">
+          <div className="community-orbit community-orbit-one" /><div className="community-orbit community-orbit-two" />
+          <div className="community-copy">
+            <span className="eyebrow"><span>✦</span> {copy.community.eyebrow}</span>
+            <h2>{copy.community.titleStart}<br /><em>{copy.community.titleEm}</em></h2>
+            <p>{copy.community.body}</p>
+            <a className="button" href={siteConfig.communityUrl} target="_blank" rel="noreferrer">{copy.community.button} <span>↗</span></a>
+            <small>{copy.community.note}</small>
+          </div>
+          <div className="community-conversations" aria-hidden="true">
+            <article><span>01</span><div><b>✦</b><i /><i /></div></article>
+            <article><span>02</span><div><b>◌</b><i /><i /></div></article>
+            <article><span>03</span><div><b>◎</b><i /><i /></div></article>
+          </div>
+        </div>
+      </section>
+
       <section className="faq section-pad" id="faq">
         <div className="container faq-grid">
           <div className="faq-intro"><span className="section-number">04</span><p className="kicker">{copy.faq.kicker}</p><h2>{copy.faq.titleStart}<br /><em>{copy.faq.titleEm}</em></h2><p>{copy.faq.body}</p><a href="#download" className="text-link">{copy.faq.ready} <span>↗</span></a></div>
@@ -176,11 +196,11 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
 
       <section className="download" id="download">
         <div className="download-spark spark-a">✦</div><div className="download-spark spark-b">✦</div>
-        <div className="container download-inner"><Logo light /><span className="eyebrow dark"><span>✦</span> {copy.download.eyebrow}</span><h2>{copy.download.titleStart}<br /><em>{copy.download.titleEm}</em></h2><p>{copy.download.body}</p><a href="#top" className="button button-light">{copy.download.button} <span>↗</span></a><StoreBadges locale={locale} inverse /></div>
+        <div className="container download-inner"><Logo light /><span className="eyebrow dark"><span>✦</span> {copy.download.eyebrow}</span><h2>{copy.download.titleStart}<br /><em>{copy.download.titleEm}</em></h2><p>{copy.download.body}</p><WaitlistForm locale={locale} copy={copy.waitlist} /><StoreBadges locale={locale} inverse /></div>
       </section>
 
       <footer>
-        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#faq">{copy.nav.faq}</a><a href="https://alborapp.com/privacy">{copy.legal.privacy}</a><a href="https://alborapp.com/terms">{copy.legal.terms}</a><a href="https://alborapp.com/refund">İade ve İptal</a><a href="https://alborapp.com/support">{copy.legal.support}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
+        <div className="container footer-grid"><div><Logo /><p>{copy.footer.description}</p></div><div className="footer-links"><a href="#how-it-works">{copy.nav.how}</a><a href="#features">{copy.nav.features}</a><a href="#categories">{copy.nav.categories}</a><a href="#community">{copy.nav.community}</a><a href="#faq">{copy.nav.faq}</a><a href="https://alborapp.com/privacy">{copy.legal.privacy}</a><a href="https://alborapp.com/terms">{copy.legal.terms}</a><a href="https://alborapp.com/refund">İade ve İptal</a><a href="https://alborapp.com/support">{copy.legal.support}</a></div><div><p className="footer-label">{copy.footer.coming}</p><StoreBadges locale={locale} /></div></div>
         <div className="container footer-bottom"><span>© {new Date().getFullYear()} Albor</span><span>{copy.footer.spark}</span></div>
       </footer>
     </main>

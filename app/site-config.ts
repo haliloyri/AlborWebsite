@@ -12,6 +12,7 @@ function screenshotsFor(locale: Locale): Record<ScreenshotName, string> {
 export const siteConfig = {
   brand: "Albor",
   defaultLocale: "en" as Locale,
+  communityUrl: "https://github.com/haliloyri/AlborWebsite/discussions",
   storeLinks: {
     appStore: null as string | null,
     googlePlay: null as string | null,

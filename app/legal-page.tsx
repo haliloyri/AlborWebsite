@@ -16,7 +16,7 @@ const routes: Record<LegalPageKind, string> = {
 function LegalLogo() {
   return (
     <span className="brand" aria-label="Albor">
-      <img className="brand-mark" src="/albor-logo.png" alt="" width="512" height="512" aria-hidden="true" />
+      <img className="brand-mark" src="/albor-brand-mark-v2.png" alt="" width="512" height="512" aria-hidden="true" />
       <span className="brand-name">Albor</span>
     </span>
   );
