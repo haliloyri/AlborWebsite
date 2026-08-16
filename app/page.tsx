@@ -65,6 +65,11 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
   return (
     <main>
       <header className="nav-wrap">
+        <a className="waitlist-banner" href="#download">
+          <span aria-hidden="true">✦</span>
+          {copy.download.button}
+          <b aria-hidden="true">→</b>
+        </a>
         <nav className="nav container" aria-label={copy.nav.aria}>
           <a href={`${homePath(locale)}#top`} className="logo-link"><Logo /></a>
           <button className="menu-toggle" aria-expanded={menuOpen} aria-controls="mobile-menu" onClick={() => setMenuOpen(!menuOpen)}>
