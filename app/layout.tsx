@@ -26,8 +26,9 @@ export function generateMetadata(): Metadata {
       languages: { tr: "/tr", en: "/en", de: "/de", es: "/es" },
     },
     icons: {
-      icon: [{ url: "/favicon.png", type: "image/png", sizes: "64x64" }],
-      apple: [{ url: "/apple-touch-icon.png", type: "image/png", sizes: "180x180" }],
+      icon: [{ url: "/albor-logo.png?v=2", type: "image/png", sizes: "512x512" }],
+      shortcut: [{ url: "/albor-logo.png?v=2", type: "image/png" }],
+      apple: [{ url: "/albor-logo.png?v=2", type: "image/png", sizes: "512x512" }],
     },
     openGraph: { title, description, type: "website", locale: "en_US", images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Albor — One idea a day. A clearer perspective." }] },
     twitter: { card: "summary_large_image", title, description, images: ["/og.png"] },
