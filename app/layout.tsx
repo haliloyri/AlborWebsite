@@ -27,7 +27,7 @@ export function generateMetadata(): Metadata {
     },
     icons: {
       icon: [{ url: "/albor-logo.png?v=2", type: "image/png", sizes: "512x512" }],
-      shortcut: [{ url: "/albor-logo.png?v=2", type: "image/png" }],
+      shortcut: "/albor-logo.png?v=2",
       apple: [{ url: "/albor-logo.png?v=2", type: "image/png", sizes: "512x512" }],
     },
     openGraph: { title, description, type: "website", locale: "en_US", images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Albor — One idea a day. A clearer perspective." }] },
