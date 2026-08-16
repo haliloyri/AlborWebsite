@@ -13,18 +13,19 @@ type WaitlistCopy = {
   submitting: string;
   success: string;
   duplicate: string;
+  verification: string;
   error: string;
 };
 
 type TurnstileApi = {
-  ready(callback: () => void): void;
   render(container: HTMLElement, options: {
     sitekey: string;
     action: string;
     theme: "dark";
     callback(token: string): void;
     "expired-callback"(): void;
-    "error-callback"(): void;
+    "error-callback"(errorCode: string): boolean;
+    "unsupported-callback"(): void;
   }): string;
   reset(widgetId?: string): void;
 };
@@ -41,7 +42,7 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
   const [website, setWebsite] = useState("");
   const [turnstileSiteKey, setTurnstileSiteKey] = useState<string | null>(null);
   const [turnstileToken, setTurnstileToken] = useState("");
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "duplicate" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "duplicate" | "verification" | "error">("idle");
   const turnstileContainer = useRef<HTMLDivElement>(null);
   const widgetId = useRef<string | undefined>(undefined);
 
@@ -60,42 +61,78 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
 
   useEffect(() => {
     if (!turnstileSiteKey || !turnstileContainer.current) return;
+    let disposed = false;
+    let retryTimer: number | undefined;
+
+    const verificationFailed = () => {
+      if (!disposed) {
+        setTurnstileToken("");
+        setStatus("verification");
+      }
+    };
 
     const renderWidget = () => {
-      if (!window.turnstile || !turnstileContainer.current || widgetId.current) return;
-      window.turnstile.ready(() => {
-        if (!window.turnstile || !turnstileContainer.current || widgetId.current) return;
+      if (disposed || !window.turnstile || !turnstileContainer.current || widgetId.current !== undefined) return false;
+
+      try {
         widgetId.current = window.turnstile.render(turnstileContainer.current, {
           sitekey: turnstileSiteKey,
           action: "waitlist",
           theme: "dark",
-          callback: setTurnstileToken,
+          callback: (token) => {
+            setTurnstileToken(token);
+            setStatus((current) => current === "verification" ? "idle" : current);
+          },
           "expired-callback": () => setTurnstileToken(""),
-          "error-callback": () => setTurnstileToken(""),
+          "error-callback": () => {
+            verificationFailed();
+            return true;
+          },
+          "unsupported-callback": verificationFailed,
         });
-      });
+        return true;
+      } catch {
+        verificationFailed();
+        return false;
+      }
     };
 
     const existing = document.querySelector<HTMLScriptElement>("script[data-albor-turnstile]");
-    if (existing) {
-      if (window.turnstile) renderWidget();
-      else existing.addEventListener("load", renderWidget, { once: true });
-      return () => existing.removeEventListener("load", renderWidget);
+    if (!existing) {
+      const script = document.createElement("script");
+      script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+      script.async = true;
+      script.defer = true;
+      script.dataset.alborTurnstile = "true";
+      script.addEventListener("error", verificationFailed, { once: true });
+      document.head.appendChild(script);
     }
 
-    const script = document.createElement("script");
-    script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    script.async = true;
-    script.defer = true;
-    script.dataset.alborTurnstile = "true";
-    script.addEventListener("load", renderWidget, { once: true });
-    document.head.appendChild(script);
+    let attempts = 0;
+    if (!renderWidget()) {
+      retryTimer = window.setInterval(() => {
+        attempts += 1;
+        if (renderWidget() || attempts >= 40) {
+          window.clearInterval(retryTimer);
+          if (attempts >= 40 && widgetId.current === undefined) verificationFailed();
+        }
+      }, 250);
+    }
 
-    return () => script.removeEventListener("load", renderWidget);
+    return () => {
+      disposed = true;
+      if (retryTimer !== undefined) window.clearInterval(retryTimer);
+    };
   }, [turnstileSiteKey]);
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (turnstileSiteKey && !turnstileToken) {
+      setStatus("verification");
+      return;
+    }
+
     setStatus("submitting");
 
     try {
@@ -115,7 +152,7 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
         return;
       }
 
-      setStatus("error");
+      setStatus(result.code === "turnstile_failed" ? "verification" : "error");
       if (window.turnstile && widgetId.current) window.turnstile.reset(widgetId.current);
       setTurnstileToken("");
     } catch {
@@ -123,7 +160,7 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
     }
   }
 
-  const message = status === "success" ? copy.success : status === "duplicate" ? copy.duplicate : status === "error" ? copy.error : null;
+  const message = status === "success" ? copy.success : status === "duplicate" ? copy.duplicate : status === "verification" ? copy.verification : status === "error" ? copy.error : null;
 
   return (
     <form className="waitlist-form" onSubmit={submit}>
@@ -145,7 +182,7 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
         Website
         <input name="website" value={website} onChange={(event) => setWebsite(event.target.value)} tabIndex={-1} autoComplete="off" />
       </label>
-      <button className="button button-light" type="submit" disabled={status === "submitting" || !consent || Boolean(turnstileSiteKey && !turnstileToken)}>
+      <button className="button button-light" type="submit" disabled={status === "submitting"}>
         {status === "submitting" ? copy.submitting : copy.submit} <span className="download-arrow" aria-hidden="true">→</span>
       </button>
       <label className="waitlist-consent">

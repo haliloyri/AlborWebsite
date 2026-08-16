@@ -246,7 +246,7 @@ h2 { font: 600 clamp(43px, 4.7vw, 66px)/1.01 var(--font-display), serif; letter-
 .waitlist-turnstile { grid-column: 1 / -1; min-height: 65px; display: flex; justify-content: center; margin-top: 3px; }
 .waitlist-message { grid-column: 1 / -1; min-height: 20px; margin: 0; color: rgba(255,255,255,.74); font-size: 12px; text-align: center; }
 .waitlist-message.success, .waitlist-message.duplicate { color: #cfe7d7; }
-.waitlist-message.error { color: #ffd2c7; }
+.waitlist-message.error, .waitlist-message.verification { color: #ffd2c7; }
 .store-badges.inverse .store-badge { border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08); color: white; }
 .store-badges.inverse .store-symbol { color: white; }
 .download-spark { position: absolute; color: #e9c77f; opacity: .45; }.spark-a { left: 14%; top: 24%; font-size: 24px; }.spark-b { right: 15%; bottom: 25%; font-size: 15px; }
