@@ -72,7 +72,7 @@ h2 { font-size: clamp(32px, 4vw, 54px); line-height: 1.08; letter-spacing: -.02e
 .nav { height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 26px; }
 .logo-link { flex-shrink: 0; }
 .brand { display: inline-flex; align-items: center; gap: 11px; }
-.brand-mark { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 12px; object-fit: cover; }
+.brand-mark { width: 42px; height: 42px; flex: 0 0 42px; border-radius: 12px; object-fit: cover; box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .32), 0 4px 12px rgba(0, 0, 0, .18); }
 .brand-name { font: 700 30px/1 var(--font-head); letter-spacing: -.02em; }
 .brand-light .brand-name { color: var(--brand-ink); }
 .nav-links { display: flex; align-items: center; gap: 28px; margin-left: auto; }
