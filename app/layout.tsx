@@ -1,24 +1,23 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Hanken_Grotesk, Newsreader } from "next/font/google";
+import { Figtree, JetBrains_Mono, Unbounded } from "next/font/google";
 import "./globals.css";
 
-const display = Bricolage_Grotesque({
+const display = Unbounded({
   variable: "--font-display",
   subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700"],
+  weight: ["500", "700"],
 });
 
-const serif = Newsreader({
-  variable: "--font-serif",
-  subsets: ["latin", "latin-ext"],
-  style: ["italic"],
-  weight: ["400", "500"],
-});
-
-const sans = Hanken_Grotesk({
+const sans = Figtree({
   variable: "--font-sans",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["500", "700"],
 });
 
 export function generateMetadata(): Metadata {
@@ -42,5 +41,5 @@ export function generateMetadata(): Metadata {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${display.variable} ${serif.variable} ${sans.variable}`}>{children}</body></html>;
+  return <html lang="en"><body className={`${display.variable} ${sans.variable} ${mono.variable}`}>{children}</body></html>;
 }

@@ -8,6 +8,7 @@ type WaitlistCopy = {
   emailLabel: string;
   emailPlaceholder: string;
   consent: string;
+  secure: string;
   privacy: string;
   submit: string;
   submitting: string;
@@ -185,11 +186,16 @@ export function WaitlistForm({ locale, copy }: { locale: Locale; copy: WaitlistC
       <button className="button button-light" type="submit" disabled={status === "submitting"}>
         {status === "submitting" ? copy.submitting : copy.submit} <span className="download-arrow" aria-hidden="true">→</span>
       </button>
+      {turnstileSiteKey ? (
+        <div className="waitlist-secure">
+          <span className="waitlist-secure-label"><svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14"><path d="M8 1 2.5 3.2v4.2c0 3.2 2.3 5.6 5.5 7.1 3.2-1.5 5.5-3.9 5.5-7.1V3.2L8 1Zm-.9 9.3L4.9 8.1l1-1 1.2 1.2 3-3 1 1-4 4Z" fill="currentColor" /></svg>{copy.secure}</span>
+          <div className="waitlist-turnstile" ref={turnstileContainer} />
+        </div>
+      ) : null}
       <label className="waitlist-consent">
         <input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} required />
         <span>{copy.consent} <a href={localizedPath("/privacy", locale)}>{copy.privacy}</a></span>
       </label>
-      {turnstileSiteKey ? <div className="waitlist-turnstile" ref={turnstileContainer} /> : null}
       <p className={`waitlist-message ${status}`} role="status" aria-live="polite">{message}</p>
     </form>
   );

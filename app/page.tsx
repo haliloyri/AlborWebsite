@@ -105,6 +105,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
             <p className="micro-proof">{copy.hero.proof}</p>
           </div>
           <div className="hero-visual" aria-label={copy.hero.visualAria}>
+            <div className="hero-clock" aria-hidden="true">03<i>:</i>00</div>
             <Phone src={screens.onboarding} alt={copy.imageAlt.onboarding} className="phone-secondary" eager />
             <Phone src={screens.home} alt={copy.imageAlt.home} className="phone-primary" eager />
             <div className="floating-note note-top"><span>03:00</span><small>{copy.hero.reading}</small></div>
