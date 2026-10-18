@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Bricolage_Grotesque, Hanken_Grotesk, Newsreader } from "next/font/google";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
+const display = Bricolage_Grotesque({
   variable: "--font-display",
   subsets: ["latin", "latin-ext"],
   weight: ["500", "600", "700"],
 });
 
-const sans = DM_Sans({
+const serif = Newsreader({
+  variable: "--font-serif",
+  subsets: ["latin", "latin-ext"],
+  style: ["italic"],
+  weight: ["400", "500"],
+});
+
+const sans = Hanken_Grotesk({
   variable: "--font-sans",
   subsets: ["latin", "latin-ext"],
   weight: ["400", "500", "600", "700"],
@@ -35,5 +42,5 @@ export function generateMetadata(): Metadata {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body className={`${display.variable} ${sans.variable}`}>{children}</body></html>;
+  return <html lang="en"><body className={`${display.variable} ${serif.variable} ${sans.variable}`}>{children}</body></html>;
 }

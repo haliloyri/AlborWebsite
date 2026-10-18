@@ -6,8 +6,6 @@ import { siteConfig } from "./site-config";
 import { localeLabels, locales, translations, type Locale } from "./translations";
 import { WaitlistForm } from "./waitlist-form";
 
-const categoryIcons = ["◌", "Φ", "◒", "⚑", "⌂", "✧", "♡", "◍", "✓", "↗"];
-const categoryTones = ["lilac", "violet", "gold", "blue", "sand", "sky", "teal", "orange", "green", "sage"];
 const featureImages = ["home", "story-detail", "library", "progress", "profile"] as const;
 
 function Logo({ light = false }: { light?: boolean }) {
@@ -66,7 +64,6 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
     <main>
       <header className="nav-wrap">
         <a className="waitlist-banner" href="#download">
-          <span aria-hidden="true">✦</span>
           {copy.download.button}
           <b aria-hidden="true">→</b>
         </a>
@@ -85,7 +82,6 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
           </div>
           <label className="language-select">
             <span className="sr-only">{copy.nav.language}</span>
-            <span aria-hidden="true">◎</span>
             <select value={locale} onChange={(event) => changeLocale(event.target.value as Locale)} aria-label={copy.nav.language}>
               {locales.map((item) => <option value={item} key={item}>{localeLabels[item]} · {item.toUpperCase()}</option>)}
             </select>
@@ -95,25 +91,24 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
       </header>
 
       <section className="hero" id="top">
-        <div className="hero-glow glow-one" /><div className="hero-glow glow-two" />
+        <div className="hero-sun" aria-hidden="true" />
         <div className="container hero-grid">
           <div className="hero-copy">
-            <div className="eyebrow"><span>✦</span> {copy.hero.eyebrow}</div>
+            <div className="eyebrow">{copy.hero.eyebrow}</div>
             <h1>{copy.hero.titleStart}<br /><em>{copy.hero.titleEm}</em> {copy.hero.titleEnd}</h1>
             <p>{copy.hero.body}</p>
             <div className="hero-actions">
               <a className="button" href="#download">{copy.hero.primary} <span className="download-icon" aria-hidden="true"><span /></span></a>
-              <a className="text-link" href="#how-it-works"><span className="play">▶</span> {copy.hero.secondary}</a>
+              <a className="text-link" href="#how-it-works">{copy.hero.secondary}</a>
             </div>
             <StoreBadges locale={locale} />
-            <div className="micro-proof"><span className="spark-row">✦ ✦ ✦</span><span>{copy.hero.proof}</span></div>
+            <p className="micro-proof">{copy.hero.proof}</p>
           </div>
           <div className="hero-visual" aria-label={copy.hero.visualAria}>
-            <div className="orbit orbit-one" /><div className="orbit orbit-two" />
             <Phone src={screens.onboarding} alt={copy.imageAlt.onboarding} className="phone-secondary" eager />
             <Phone src={screens.home} alt={copy.imageAlt.home} className="phone-primary" eager />
             <div className="floating-note note-top"><span>03:00</span><small>{copy.hero.reading}</small></div>
-            <div className="floating-note note-bottom"><i>✦</i><span><b>{copy.hero.conversation}</b><small>{copy.hero.conversationNote}</small></span></div>
+            <div className="floating-note note-bottom"><span><b>{copy.hero.conversation}</b><small>{copy.hero.conversationNote}</small></span></div>
           </div>
         </div>
         <div className="hero-foot container"><span>{copy.hero.foot[0]}</span><i /><span>{copy.hero.foot[1]}</span><i /><span>{copy.hero.foot[2]}</span></div>
@@ -122,18 +117,18 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
       <section className="value section-pad">
         <div className="container">
           <div className="section-intro split-intro">
-            <div><span className="section-number">01</span><p className="kicker">{copy.value.kicker}</p><h2>{copy.value.titleStart}<br /><em>{copy.value.titleEm}</em></h2></div>
+            <div><p className="kicker">{copy.value.kicker}</p><h2>{copy.value.titleStart}<br /><em>{copy.value.titleEm}</em></h2></div>
             <p>{copy.value.body}</p>
           </div>
           <div className="value-cards">
-            {copy.value.cards.map(([title, body], index) => <article className={index === 1 ? "featured" : ""} key={title}><span className="card-index">0{index + 1}</span><i className="value-icon">{["◴", "◎", "◇"][index]}</i><h3>{title}</h3><p>{body}</p></article>)}
+            {copy.value.cards.map(([title, body], index) => <article className={index === 1 ? "featured" : ""} key={title}><h3>{title}</h3><p>{body}</p></article>)}
           </div>
         </div>
       </section>
 
       <section className="how section-pad" id="how-it-works">
         <div className="container">
-          <div className="center-intro"><span className="eyebrow"><span>✦</span> {copy.how.eyebrow}</span><h2>{copy.how.titleStart}<br /><em>{copy.how.titleEm}</em></h2></div>
+          <div className="center-intro"><span className="eyebrow">{copy.how.eyebrow}</span><h2>{copy.how.titleStart}<br /><em>{copy.how.titleEm}</em></h2></div>
           <div className="steps">
             {copy.how.steps.map(([title, body], index) => {
               const image = [screens.onboarding, screens["story-detail"], screens.home][index];
@@ -146,62 +141,59 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
 
       <section className="features section-pad" id="features">
         <div className="container">
-          <div className="section-intro feature-heading"><span className="section-number">02</span><p className="kicker">{copy.featuresHeading.kicker}</p><h2>{copy.featuresHeading.titleStart}<br /><em>{copy.featuresHeading.titleEm}</em></h2></div>
+          <div className="section-intro feature-heading"><p className="kicker">{copy.featuresHeading.kicker}</p><h2>{copy.featuresHeading.titleStart}<br /><em>{copy.featuresHeading.titleEm}</em></h2></div>
           <div className="feature-list">
-            {copy.features.map((feature, index) => <article className={`feature-row ${index % 2 ? "reverse" : ""}`} key={feature.title}><div className="feature-visual"><span className="feature-count">0{index + 1}</span><div className="feature-shape" /><Phone src={screens[featureImages[index]]} alt={feature.alt} /></div><div className="feature-copy"><span className="eyebrow plain">{feature.eyebrow}</span><h3>{feature.title}</h3><p>{feature.body}</p><span className="feature-note"><i>✓</i>{feature.note}</span></div></article>)}
+            {copy.features.map((feature, index) => <article className={`feature-row ${index % 2 ? "reverse" : ""}`} key={feature.title}><div className="feature-visual"><div className="feature-shape" /><Phone src={screens[featureImages[index]]} alt={feature.alt} /></div><div className="feature-copy"><span className="eyebrow plain">{feature.eyebrow}</span><h3>{feature.title}</h3><p>{feature.body}</p><span className="feature-note">{feature.note}</span></div></article>)}
           </div>
         </div>
       </section>
 
       <section className="categories section-pad" id="categories">
         <div className="container">
-          <div className="split-intro category-head"><div><span className="section-number">03</span><p className="kicker">{copy.category.kicker}</p><h2>{copy.category.titleStart} <em>{copy.category.titleEm}</em></h2></div><p>{copy.category.body}</p></div>
+          <div className="split-intro category-head"><div><p className="kicker">{copy.category.kicker}</p><h2>{copy.category.titleStart} <em>{copy.category.titleEm}</em></h2></div><p>{copy.category.body}</p></div>
           <div className="category-grid">
-            {copy.category.names.map((name, index) => <article className={`category-card ${categoryTones[index]}`} key={name}><span className="category-num">{String(index + 1).padStart(2, "0")}</span><i>{categoryIcons[index]}</i><h3>{name}</h3><span className="category-arrow">↗</span></article>)}
+            {copy.category.names.map((name) => <article className="category-card" key={name}><h3>{name}</h3></article>)}
           </div>
         </div>
       </section>
 
       <section className="habit">
-        <div className="habit-orbit" />
-        <div className="container habit-grid">
-          <div className="habit-copy"><span className="eyebrow dark"><span>✦</span> {copy.habit.eyebrow}</span><h2>{copy.habit.titleStart} <em>{copy.habit.titleEm}</em></h2><p>{copy.habit.body}</p>
+                <div className="container habit-grid">
+          <div className="habit-copy"><span className="eyebrow dark">{copy.habit.eyebrow}</span><h2>{copy.habit.titleStart} <em>{copy.habit.titleEm}</em></h2><p>{copy.habit.body}</p>
             <div className="habit-stats"><div><strong>3<small>{copy.habit.minute}</small></strong><span>{copy.habit.goal}</span></div><div><strong>1<small>{copy.habit.ideaUnit}</small></strong><span>{copy.habit.idea}</span></div><div><strong>∞</strong><span>{copy.habit.connection}</span></div></div>
           </div>
-          <div className="habit-visual"><div className="streak-pill"><span>🔥</span><b>{copy.habit.streak}</b></div><Phone src={screens.progress} alt={copy.imageAlt.progress} /><div className="badge-card"><span>✦</span><div><b>{copy.habit.badge}</b><small>{copy.habit.badgeNote}</small></div></div></div>
+          <div className="habit-visual"><div className="streak-pill"><b>{copy.habit.streak}</b></div><Phone src={screens.progress} alt={copy.imageAlt.progress} /><div className="badge-card"><div><b>{copy.habit.badge}</b><small>{copy.habit.badgeNote}</small></div></div></div>
         </div>
       </section>
 
       <section className="community section-pad" id="community">
         <div className="container community-card">
-          <div className="community-orbit community-orbit-one" /><div className="community-orbit community-orbit-two" />
-          <div className="community-copy">
-            <span className="eyebrow"><span>✦</span> {copy.community.eyebrow}</span>
+                    <div className="community-copy">
+            <span className="eyebrow">{copy.community.eyebrow}</span>
             <h2>{copy.community.titleStart}<br /><em>{copy.community.titleEm}</em></h2>
             <p>{copy.community.body}</p>
             <a className="button" href={siteConfig.communityUrl} target="_blank" rel="noreferrer">{copy.community.button} <span>↗</span></a>
             <small>{copy.community.note}</small>
           </div>
           <div className="community-conversations" aria-hidden="true">
-            <article><span>01</span><div><b>✦</b><i /><i /></div></article>
-            <article><span>02</span><div><b>◌</b><i /><i /></div></article>
-            <article><span>03</span><div><b>◎</b><i /><i /></div></article>
+            <article><div><i /><i /><i /></div></article>
+            <article><div><i /><i /><i /></div></article>
+            <article><div><i /><i /></div></article>
           </div>
         </div>
       </section>
 
       <section className="faq section-pad" id="faq">
         <div className="container faq-grid">
-          <div className="faq-intro"><span className="section-number">04</span><p className="kicker">{copy.faq.kicker}</p><h2>{copy.faq.titleStart}<br /><em>{copy.faq.titleEm}</em></h2><p>{copy.faq.body}</p><a href="#download" className="text-link">{copy.faq.ready} <span className="download-icon" aria-hidden="true"><span /></span></a></div>
+          <div className="faq-intro"><p className="kicker">{copy.faq.kicker}</p><h2>{copy.faq.titleStart}<br /><em>{copy.faq.titleEm}</em></h2><p>{copy.faq.body}</p><a href="#download" className="text-link">{copy.faq.ready} <span className="download-icon" aria-hidden="true"><span /></span></a></div>
           <div className="accordion">
-            {copy.faq.items.map(([question, answer], index) => <div className={`faq-item ${openFaq === index ? "open" : ""}`} key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span><i>{String(index + 1).padStart(2, "0")}</i>{question}</span><b aria-hidden="true">+</b></button><div className="faq-answer"><p>{answer}</p></div></div>)}
+            {copy.faq.items.map(([question, answer], index) => <div className={`faq-item ${openFaq === index ? "open" : ""}`} key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><b aria-hidden="true">+</b></button><div className="faq-answer"><p>{answer}</p></div></div>)}
           </div>
         </div>
       </section>
 
       <section className="download" id="download">
-        <div className="download-spark spark-a">✦</div><div className="download-spark spark-b">✦</div>
-        <div className="container download-inner"><Logo light /><span className="eyebrow dark"><span>✦</span> {copy.download.eyebrow}</span><h2>{copy.download.titleStart}<br /><em>{copy.download.titleEm}</em></h2><p>{copy.download.body}</p><WaitlistForm locale={locale} copy={copy.waitlist} /><StoreBadges locale={locale} inverse /></div>
+                <div className="container download-inner"><Logo light /><span className="eyebrow dark">{copy.download.eyebrow}</span><h2>{copy.download.titleStart}<br /><em>{copy.download.titleEm}</em></h2><p>{copy.download.body}</p><WaitlistForm locale={locale} copy={copy.waitlist} /><StoreBadges locale={locale} inverse /></div>
       </section>
 
       <footer>

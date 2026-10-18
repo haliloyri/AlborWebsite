@@ -51,7 +51,6 @@ export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind;
           </nav>
           <label className="language-select legal-language">
             <span className="sr-only">{copy.language}</span>
-            <span aria-hidden="true">◎</span>
             <select value={locale} onChange={(event) => changeLocale(event.target.value as Locale)} aria-label={copy.language}>
               {locales.map((item) => <option value={item} key={item}>{localeLabels[item]} · {item.toUpperCase()}</option>)}
             </select>
@@ -62,7 +61,7 @@ export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind;
       <section className="legal-hero">
         <div className="container legal-hero-inner">
           <a href={homePath(locale)} className="legal-back">← {copy.back}</a>
-          <span className="eyebrow"><span>✦</span>{document.eyebrow}</span>
+          <span className="eyebrow">{document.eyebrow}</span>
           <h1>{document.title}</h1>
           <p>{document.intro}</p>
           <div className="legal-meta">
@@ -96,7 +95,7 @@ export function LegalPage({ kind, initialLocale = "en" }: { kind: LegalPageKind;
 
       <section className="legal-contact">
         <div className="container legal-contact-card">
-          <div><span>✦</span><h2>{copy.contactPrompt}</h2></div>
+          <div><h2>{copy.contactPrompt}</h2></div>
           <a className="button" href="mailto:info@alborapp.com">info@alborapp.com <span>↗</span></a>
         </div>
       </section>
