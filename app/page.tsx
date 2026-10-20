@@ -105,10 +105,10 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
             <p className="micro-proof">{copy.hero.proof}</p>
           </div>
           <div className="hero-visual" aria-label={copy.hero.visualAria}>
-            <div className="hero-clock" aria-hidden="true">03<i>:</i>00</div>
+            <div className="hero-count" aria-hidden="true"><b>3</b><span>{copy.hero.perDay}</span></div>
             <Phone src={screens.onboarding} alt={copy.imageAlt.onboarding} className="phone-secondary" eager />
             <Phone src={screens.home} alt={copy.imageAlt.home} className="phone-primary" eager />
-            <div className="floating-note note-top"><span>03:00</span><small>{copy.hero.reading}</small></div>
+            <div className="floating-note note-top"><span>3</span><small>{copy.hero.reading}</small></div>
             <div className="floating-note note-bottom"><span><b>{copy.hero.conversation}</b><small>{copy.hero.conversationNote}</small></span></div>
           </div>
         </div>
@@ -161,7 +161,7 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
       <section className="habit">
                 <div className="container habit-grid">
           <div className="habit-copy"><span className="eyebrow dark">{copy.habit.eyebrow}</span><h2>{copy.habit.titleStart} <em>{copy.habit.titleEm}</em></h2><p>{copy.habit.body}</p>
-            <div className="habit-stats"><div><strong>3<small>{copy.habit.minute}</small></strong><span>{copy.habit.goal}</span></div><div><strong>1<small>{copy.habit.ideaUnit}</small></strong><span>{copy.habit.idea}</span></div><div><strong>∞</strong><span>{copy.habit.connection}</span></div></div>
+            <div className="habit-stats"><div><strong>3<small>{copy.habit.storyUnit}</small></strong><span>{copy.habit.goal}</span></div><div><strong>1<small>{copy.habit.ideaUnit}</small></strong><span>{copy.habit.idea}</span></div><div><strong>∞</strong><span>{copy.habit.connection}</span></div></div>
           </div>
           <div className="habit-visual"><div className="streak-pill"><b>{copy.habit.streak}</b></div><Phone src={screens.progress} alt={copy.imageAlt.progress} /><div className="badge-card"><div><b>{copy.habit.badge}</b><small>{copy.habit.badgeNote}</small></div></div></div>
         </div>
