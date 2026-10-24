@@ -227,8 +227,8 @@ footer .store-badge { color: var(--ink); border-color: var(--line-strong); backg
 .faq-item button b { font: 300 28px var(--font-body); color: var(--link); transition: transform .2s ease; }
 .faq-item.open button b { transform: rotate(45deg); }
 .faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease; }
-.faq-answer p { overflow: hidden; color: var(--muted); font-size: 15px; max-width: 620px; margin: 0; padding-inline: 24px; }
-.faq-item.open .faq-answer p { padding-bottom: 22px; }
+.faq-answer p { min-height: 0; overflow: hidden; color: var(--muted); font-size: 15px; max-width: 620px; margin: 0; padding-inline: 24px; }
+.faq-item.open .faq-answer { grid-template-rows: 1fr; padding-bottom: 22px; }
 
 /* download: teal again */
 .download { padding-block: 104px; background: var(--brand); color: var(--brand-ink); position: relative; overflow: hidden; }
