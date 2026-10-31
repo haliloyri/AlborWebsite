@@ -9,7 +9,7 @@ export function generateStaticParams() {
 }
 
 const metadataByLocale: Record<string, { title: string; description: string }> = {
-  tr: { title: "Albor — Her gün bir fikir, daha açık bir bakış.", description: "Güçlü kitaplardan ve gerçek hikâyelerden gelen fikirleri birkaç dakikalık kısa deneyimlerde keşfedin." },
+  tr: { title: "Albor — Her gün bir fikir, daha açık bir bakış.", description: "Güçlü kitaplardan ve gerçek hikâyelerden gelen fikirleri her gün yeni bir bakış açısı kazandıran kısa deneyimlerde keşfedin." },
   en: { title: "Albor — One idea a day, a clearer perspective.", description: "Discover ideas from powerful books and real stories through short, thoughtful reading experiences." },
   de: { title: "Albor — Jeden Tag eine Idee, ein klarerer Blick.", description: "Entdecke Ideen aus starken Büchern und wahren Geschichten in kurzen Leseerlebnissen." },
   es: { title: "Albor — Una idea al día, una mirada más clara.", description: "Descubre ideas de grandes libros e historias reales en breves experiencias de lectura." },
