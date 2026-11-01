@@ -112,11 +112,8 @@ export default function Home({ initialLocale = siteConfig.defaultLocale }: { ini
           <div id="mobile-menu" className={`nav-links ${menuOpen ? "open" : ""}`}>
             <a href="#how-it-works" onClick={() => setMenuOpen(false)}>{copy.nav.how}</a>
             <a href="#features" onClick={() => setMenuOpen(false)}>{copy.nav.features}</a>
-            <a href="#stories" onClick={() => setMenuOpen(false)}>{copy.nav.stories}</a>
-            <a href="#categories" onClick={() => setMenuOpen(false)}>{copy.nav.categories}</a>
-            <a href="#community" onClick={() => setMenuOpen(false)}>{copy.nav.community}</a>
+            <a className="nav-highlight" href="#stories" onClick={() => setMenuOpen(false)}>{copy.nav.stories}</a>
             <a href="#faq" onClick={() => setMenuOpen(false)}>{copy.nav.faq}</a>
-            <a href="https://alborapp.com/support" onClick={() => setMenuOpen(false)}>{copy.legal.support}</a>
           </div>
           <label className="language-select">
             <span className="sr-only">{copy.nav.language}</span>

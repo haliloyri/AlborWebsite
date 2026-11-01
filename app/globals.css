@@ -45,6 +45,9 @@ p { line-height: 1.72; }
 .nav-links a { font-size: 14px; font-weight: 600; color: #3d4f4b; position: relative; }
 .nav-links a:after { content: ""; position: absolute; left: 0; right: 100%; bottom: -7px; height: 1px; background: var(--wine); transition: right .25s ease; }
 .nav-links a:hover:after { right: 0; }
+.nav-links a.nav-highlight { padding: 7px 14px; border-radius: 999px; background: var(--gold); color: var(--navy); font-weight: 700; transition: background .2s ease; }
+.nav-links a.nav-highlight:after { display: none; }
+.nav-links a.nav-highlight:hover { background: var(--gold-soft); }
 .language-select { height: 40px; display: inline-flex; align-items: center; gap: 7px; padding: 0 10px 0 12px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.55); color: #3d4f4b; flex-shrink: 0; }
 .language-select > span:not(.sr-only) { color: var(--gold); font-size: 14px; }
 .language-select select { max-width: 105px; border: 0; background: transparent; color: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
@@ -345,7 +348,7 @@ footer { background: var(--warm); padding: 75px 0 28px; }
   .nav-links { position: absolute; top: 66px; left: 16px; right: 16px; display: grid; gap: 0; background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 9px 20px; box-shadow: var(--shadow); opacity: 0; transform: translateY(-10px); pointer-events: none; transition: .25s ease; }
   .nav-links { visibility: hidden; }
   .nav-links.open { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
-  .nav-links a { padding: 15px 3px; border-bottom: 1px solid var(--line); font-size: 14px; }.nav-links a:last-child { border: 0; }.nav-links a:after { display: none; }
+  .nav-links a { padding: 15px 3px; border-bottom: 1px solid var(--line); font-size: 14px; }.nav-links a.nav-highlight { padding: 15px 14px; border-radius: 12px; border-bottom: 0; margin: 4px 0; }.nav-links a:last-child { border: 0; }.nav-links a:after { display: none; }
   .waitlist-banner { min-height: 44px; padding-inline: 16px; font-size: 10px; letter-spacing: .06em; }
   .split-intro { grid-template-columns: 1fr; gap: 28px; }.split-intro > p { max-width: 540px; }.value-cards { grid-template-columns: 1fr; margin-top: 45px; }.value-cards article { min-height: 270px; }
   .steps { grid-template-columns: 1fr; gap: 80px; }.step.lifted { transform: none; }.step .phone { width: 235px; }.step-number { left: calc(50% - 145px); }

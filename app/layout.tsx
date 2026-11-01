@@ -15,8 +15,8 @@ const sans = DM_Sans({
 });
 
 export function generateMetadata(): Metadata {
-  const title = "Albor — One idea a day, a clearer perspective.";
-  const description = "Albor turns ideas from powerful books and real stories into short, thoughtful stories that give you a new perspective every day.";
+  const title = "Albor — Ideas from great books, in your everyday life.";
+  const description = "Albor brings one idea a day from great books and true stories. Read or listen, then use it in conversation.";
 
   return {
     title,
